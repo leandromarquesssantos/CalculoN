@@ -1,4 +1,4 @@
-# CalculoN
+# Calculo Numérico
 
 Repositório para algoritmos da disciplina Calculo Numérico o curso Ciênca da Computação - Univali
 
