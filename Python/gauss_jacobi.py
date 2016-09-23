@@ -16,7 +16,7 @@ def gauss_jacobi(A,B,k=0,x=None) :
     interacoes = 0    
     #enquanto o valor encontrado for maior que o erro tolerado, continua com a interação enquanto o resultado da funcao erro for true        
     while (continua) : 
-        #interaoes recebe interacoes + 1
+        #interacoes recebe interacoes + 1
         interacoes += 1 
         #é necessario que cada interação o vetor X seja limpo
         X = zeros(len(A)) #x = [0,0,0,...]        
