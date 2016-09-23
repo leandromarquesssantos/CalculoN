@@ -4,54 +4,65 @@
 
 @author: Leandro
 """
-
-from pprint import pprint
-from numpy import array, zeros, diag, diagflat, dot
+from numpy import array, zeros, dot, allclose
 #funcao que implementa o medoto Gauss Jacobi, recebendo como parametro matrizes A e B
 def gauss_jacobi(A,B,k=0,x=None) :
     #cria uma matriz do comprimento da matriz A preenchida com zeros    
     #inicializa o vetor X com 0 em cada posição
     x = zeros(len(A)) #x = [0,0,0,...]
+    #variavel para controlar o loop enquanto for verdadeira continua com o loop
+    continua = True
+    #variavel contador do numero de interações
+    interacoes = 0    
     #enquanto o valor encontrado for maior que o erro tolerado, continua com a interação enquanto o resultado da funcao erro for true        
-    while (erro(gauss_jacobi(A,B),x)) : 
-        x[0] = (1 / A[0][0])*(B[0] - (A[0][1]*x[1]) - (A[0][2]-x[2]))
-        x[1] = (1 / A[1][1])*(B[1] - (A[1][0]*x[0]) - (A[1][2]-x[2]))
-        x[2] = (1 / A[2][2])*(B[2] - (A[2][0]*x[0]) - (A[2][1]-x[1]))
-        k = k + 1
-    print (k)
-    #retorna o vetor X como resultado
+    while (continua) : 
+        #interacoes recebe interacoes + 1
+        interacoes += 1 
+        #é necessario que cada interação o vetor X seja limpo
+        X = zeros(len(A)) #x = [0,0,0,...]        
+        #para cara coluna na matriz
+        for k in range(len(A[0])) :
+            #variavel para salvar o produto da multiplicação das posições anteriores ao indice k de A e de x
+            c = dot(A[k, :k], X[:k]) # X[:k] significa do incio de x[] até o x[k]
+            #variavel para salvar o produto da multiplicação das posições posteriores ao indice k de A e de x
+            d = dot(A[k, k + 1:], x[k + 1:]) #x[k+1:] significa do x[k+1] até o fim dos elementos de x[]
+            #calcula o valor do termo pela formula gauss jabobi.
+            X[k] = ((B[k] - c - d) / A[k, k])
+        #continua recebe false caso o valor esteja proximo o suficiente, de acordo com a tolerancia indicada (1^-10). caso contrario recebe true
+        #continua = not allclose(X, x, rtol=1e-10) #utilizando a função da biblioteca que calcula o valor do erro
+        continua = erro(X, x) #utilizando a funcao erro que escrevi para calcular o valor erro
+        print(interacoes)
+        #impoe um limite de interações
+        if (interacoes == 10000) :
+            print("não encontrou")
+            return x
+        #salva o valor calculado X na variavel x
+        x = X;
+    #retorna o vetor x como resultado
     return x
-
-
  
-"""
-     max      |Xi^k+1 - Xi^k| /       max     |Xi^k+1|
- 1 <= i <= n                      1 <= i <= n
-"""
 #funcao bool que verifica se o valor encontrado é menor que o erro tolerado, recebe o valor da interação atual e a anterior
-def erro(X,Xant,tolerado = 10**-2) :
+def erro(X,Xant,tolerado = 10**-10) :
     #resultado armazena o vetor resultado interação atual - anterior
     resultado = array(X - Xant)
     print(resultado)
     print(range(len(resultado)))
     #inicia a variavel com o primeiro elemento da matriz
-    maior1 = resultado[0][0]
+    maior1 = resultado[0]
     #inicia a variavel com o primeiro elemento do vetor
     maior2 = X[0]
     #loop para percorrer todos os elementos 
     for i in range(len(resultado)) :
-        #loop para percorrer todos os elementos
-        for j in range(len(resultado[i])) :
-            #variavel armazena o valor da posicao atual da matriz resultado
-            var = float(resultado[i][j])
-            #se o valor for menor que zero
-            if (var < 0) :
-                #multiplica o valor por -1 para torna-lo positivo
-                var = var * -1
-            #se o valor for maior que o valor armazenado na variavel maior1
-            if var > maior1 :
-                #salva o valor da variavel na variavel maior1
-                maior1 = var       
+        #variavel armazena o valor da posicao atual da matriz resultado
+        var = float(resultado[i])
+        #se o valor for menor que zero
+        if (var < 0) :
+            #multiplica o valor por -1 para torna-lo positivo
+            var = var * -1
+        #se o valor for maior que o valor armazenado na variavel maior1
+        if var > maior1 :
+            #salva o valor da variavel na variavel maior1
+            maior1 = var       
     #loop para percorrer todos os elementos    
     for i in range(len(X)) :
         #variavel armazena o valor da posição atual do vetor
@@ -99,14 +110,10 @@ for i in range(len(A)):
 print("B: ")
 print(B)
 
-print("X: ")
+print("x: ")
 print(gauss_jacobi(A,B))
 
 
-if (erro(gauss_jacobi(A,B), A)):
-    print("True")
-else :
-    print("False")
     
 
     
