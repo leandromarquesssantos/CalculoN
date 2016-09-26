@@ -6,7 +6,7 @@
 """
 from numpy import array, zeros, dot, allclose
 #funcao que implementa o medoto Gauss Jacobi, recebendo como parametro matrizes A e B
-def gauss_jacobi(A,B,k=0,x=None) :
+def gauss_seidel(A,B,k=0,x=None) :
     #cria uma matriz do comprimento da matriz A preenchida com zeros    
     #inicializa o vetor X com 0 em cada posição
     x = zeros(len(A)) #x = [0,0,0,...]
@@ -23,7 +23,7 @@ def gauss_jacobi(A,B,k=0,x=None) :
         #para cara coluna na matriz
         for k in range(len(A[0])) :
             #variavel para salvar o produto da multiplicação das posições anteriores ao indice k de A e de x
-            c = dot(A[k, :k], x[:k]) # x[:k] significa do incio de x[] até o x[k]
+            c = dot(A[k, :k], X[:k]) # X[:k] significa do incio de x[] até o x[k]
             #variavel para salvar o produto da multiplicação das posições posteriores ao indice k de A e de x
             d = dot(A[k, k + 1:], x[k + 1:]) #x[k+1:] significa do x[k+1] até o fim dos elementos de x[]
             #calcula o valor do termo pela formula gauss jabobi.
@@ -102,7 +102,6 @@ print("Colunas: ",len(A[0]))
 
 
 print("A: ")
-print(A)
 """
 for i in range(len(A)):
     print(A.transpose()[i]) #transposta
@@ -111,7 +110,6 @@ print("B: ")
 print(B)
 
 print("x: ")
-print(gauss_jacobi(A,B))
 
 
     
