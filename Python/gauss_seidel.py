@@ -102,6 +102,7 @@ print("Colunas: ",len(A[0]))
 
 
 print("A: ")
+print(A)
 """
 for i in range(len(A)):
     print(A.transpose()[i]) #transposta
@@ -110,6 +111,7 @@ print("B: ")
 print(B)
 
 print("x: ")
+print(gauss_seidel(A,B))
 
 
     
