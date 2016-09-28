@@ -8,7 +8,7 @@ from numpy import array, zeros
 
 def criteriodaslinhas(A) :
     sum  = 0
-    resultado = zeros(len(A))
+    alpha = zeros(len(A))
     for i in range(len(A)) :
         for j in range(len(A[i])) :
             if (j != i) :
@@ -16,12 +16,11 @@ def criteriodaslinhas(A) :
                     sum = sum + (-1 * A[i][j])    
                 else :
                     sum = sum + A[i][j]
-        resultado[i] = sum / A[i][i]
-    
-    max = resultado[0]    
-    for i in resultado :    
-        if (resultado[i] > max) :
-            max = resultado[i]
+        alpha[i] = sum / A[i][i]
+    max = alpha[0]    
+    for i in range(len(alpha)) :    
+        if (alpha[i] > max) :
+            max = alpha[i]
         
     if (max < 1) :    
         return True
@@ -30,7 +29,7 @@ def criteriodaslinhas(A) :
 
 def criteriodascolunas(A) :
     sum = 0
-    resultado = zeros(len(A))
+    beta = zeros(len(A))
     for i in range(len(A)) :
         for j in range(len(A[i])) :
             if (j != i) :
@@ -38,12 +37,12 @@ def criteriodascolunas(A) :
                     sum = sum + (-1 * A[i][j])    
                 else :
                     sum = sum + A[i][j]
-        resultado[i] = sum / A[j][j]
+        beta[i] = sum / A[j][j]
 
-    max = resultado[0]    
-    for i in resultado :    
-        if (resultado[i] > max) :
-            max = resultado[i]
+    max = beta[0]    
+    for i in range(len(beta)) :    
+        if  (beta[i] > max) :
+            max = beta[i]
         
     if (max < 1) :    
         return True
@@ -51,21 +50,30 @@ def criteriodascolunas(A) :
         return False
 
 def criteriodesassenfeld(A) :
+    alfa = 0
+    beta = []
+    for i in range(len(A)) :
+        if A[i][1] < 0 :
+            alfa = (alfa + (-1 * A[i][1]))
+        else :
+            alfa = (alfa + A[i][1])
+    beta.append(alfa / A[0][0])
+    
+    return beta[0]
+    alfa = 0
+    for i in range(len(A)) :
+        if i != 0 :
+            
+                if A[i-1][i] < 0 :
+                    alfa = alfa + (A[i-1][i] * -1)
 
-    for i in A :
-        for j in A[i] :
-            if (j != i) :
-                if A[i][j] < 0 :
-                    sum = sum + (-1 * A[i][j])    
-                else :
-                    sum = sum + A[i][j]
-        resultado[i] = sum / A[i][i]    
+A = array([[5.,2.,0.],
+           [1.,0.,5.],
+           [7.,-1.,8.]])
 
-
-
-A = array([[10., 2., 1.],
-           [ 0., 5., 1.],
-           [ 2., 3., 10.]])
+#A = array([[10., 2., 1.],
+#           [ 0., 5., 1.],
+#           [ 2., 3., 10.]])
 
 if (criteriodaslinhas(A)) :
     print ('passou na linha')
@@ -78,3 +86,4 @@ if (criteriodascolunas(A)) :
 else :
     print ('nao passou na coluna')
 
+print (criteriodesassenfeld(A))
