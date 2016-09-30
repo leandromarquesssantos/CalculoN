@@ -7,19 +7,19 @@
 from numpy import array, zeros, dot, allclose
 #funcao que implementa o medoto Gauss Jacobi, recebendo como parametro matrizes A e B
 def gauss_jacobi(A,B,k=0,x=None) :
-    #cria uma matriz do comprimento da matriz A preenchida com zeros    
+    #cria uma matriz do comprimento da matriz A preenchida com zeros
     #inicializa o vetor X com 0 em cada posição
     x = zeros(len(A)) #x = [0,0,0,...]
     #variavel para controlar o loop enquanto for verdadeira continua com o loop
     continua = True
     #variavel contador do numero de interações
-    interacoes = 0    
-    #enquanto o valor encontrado for maior que o erro tolerado, continua com a interação enquanto o resultado da funcao erro for true        
-    while (continua) : 
+    interacoes = 0
+    #enquanto o valor encontrado for maior que o erro tolerado, continua com a interação enquanto o resultado da funcao erro for true
+    while (continua) :
         #interacoes recebe interacoes + 1
-        interacoes += 1 
+        interacoes += 1
         #é necessario que cada interação o vetor X seja limpo
-        X = zeros(len(A)) #x = [0,0,0,...]        
+        X = zeros(len(A)) #x = [0,0,0,...]
         #para cara coluna na matriz
         for k in range(len(A[0])) :
             #variavel para salvar o produto da multiplicação das posições anteriores ao indice k de A e de x
@@ -40,7 +40,7 @@ def gauss_jacobi(A,B,k=0,x=None) :
         x = X;
     #retorna o vetor x como resultado
     return x
- 
+
 #funcao bool que verifica se o valor encontrado é menor que o erro tolerado, recebe o valor da interação atual e a anterior
 def erro(X,Xant,tolerado = 10**-10) :
     #resultado armazena o vetor resultado interação atual - anterior
@@ -51,7 +51,7 @@ def erro(X,Xant,tolerado = 10**-10) :
     maior1 = resultado[0]
     #inicia a variavel com o primeiro elemento do vetor
     maior2 = X[0]
-    #loop para percorrer todos os elementos 
+    #loop para percorrer todos os elementos
     for i in range(len(resultado)) :
         #variavel armazena o valor da posicao atual da matriz resultado
         var = float(resultado[i])
@@ -62,8 +62,8 @@ def erro(X,Xant,tolerado = 10**-10) :
         #se o valor for maior que o valor armazenado na variavel maior1
         if var > maior1 :
             #salva o valor da variavel na variavel maior1
-            maior1 = var       
-    #loop para percorrer todos os elementos    
+            maior1 = var
+    #loop para percorrer todos os elementos
     for i in range(len(X)) :
         #variavel armazena o valor da posição atual do vetor
         var = float(X[i])
@@ -75,12 +75,12 @@ def erro(X,Xant,tolerado = 10**-10) :
         if var > maior2 :
             #salva o valor da variavel na variavel maior2
             maior2 = var
-    
+
     print(maior1,maior2)
     #variavel er recebe o o valor da variavel maior1 dividido pela maior2
     er = maior1 / maior2
     print (er)
-    #se variavel er for menor que a variavel tolerado 
+    #se variavel er for menor que a variavel tolerado
     if er < tolerado :
         #retorna Falso
         return False
@@ -112,8 +112,3 @@ print(B)
 
 print("x: ")
 print(gauss_jacobi(A,B))
-
-
-    
-
-    
