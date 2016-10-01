@@ -32,6 +32,27 @@ def lagranje(X,Y,x) :
 
     return Gd*resultado
 
+def tran(X) :
+    vetor = zeros( (len(X),1), float)
+    for i in range(len(X)) :
+        vetor[i][0] = X[i]
+    return vetor
+
+
+def newton(X,Y,x) :
+    tam = len(X)
+    X = tran(X)
+    Y = tran(Y)
+
+    delta[0][0] = ((Y[1] - Y[0]) / (X[1] - X[0]))
+    delta[1][0] = ((Y[2] - Y[1]) / (X[2] - X[1]))
+    o = 1
+    while tam - o > 1 :
+        for i in range(tam) - o) :
+            delta[i][0] = (Y[i+o] - Y[i+1-o]) / (X[i+o] - X[i+1-o])
+
+
+    return 0
 
 
 #X = [0.1, 0.6, 0.8]
@@ -41,9 +62,16 @@ def lagranje(X,Y,x) :
 #X = [183., 173., 168., 188., 158., 163., 178.]
 #Y = [ 79.,  69.,  70.,  81.,  61.,  63.,  73.]
 
-X = [158., 163., 168., 173., 178., 183., 188.]
-Y = [ 61.,  63.,  70.,  69.,  73.,  79.,  81.]
-x = 175.
+#X = [158., 163., 168., 173., 178., 183., 188.]
+#Y = [ 61.,  63.,  70.,  69.,  73.,  79.,  81.]
+#x = 175.
 
-print(len(X))
-print(lagranje(X,Y,x))
+X = [0.9, 1.1, 2.0]
+Y = [3.211, 2.809, 1.614]
+x = 1.2
+
+
+print (tran(X))
+
+#print(len(X))
+#print(lagranje(X,Y,x))
