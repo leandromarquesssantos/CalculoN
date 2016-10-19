@@ -3,10 +3,16 @@
 
 @author: Leandro M
 """
-from numpy import array, zeros, dot, allclose
+from numpy import array, zeros, dot
 #funcao que implementa o medoto Gauss Jacobi, recebendo como parametro matrizes A e B
 def gauss_jacobi(A,B,k=0,x=None) :
     A = pivoteamento(A,B)
+    #Imprime a matriz escalonada
+    print(A) 
+    arq = open("escalonada.csv", 'w')        
+    arq.writelines(str(A))
+    arq.close
+
     #cria uma matriz do comprimento da matriz A preenchida com zeros
     #inicializa o vetor X com 0 em cada posição
     x = zeros(len(A)) #x = [0,0,0,...]
@@ -33,7 +39,7 @@ def gauss_jacobi(A,B,k=0,x=None) :
         #continua recebe false caso o valor esteja proximo o suficiente, de acordo com a tolerancia indicada (1^-10). caso contrario recebe true
         #continua = not allclose(X, x, rtol=1e-10) #utilizando a função da biblioteca que calcula o valor do erro
         continua = erro(X, x) #utilizando a funcao erro que escrevi para calcular o valor erro
-        print(interacoes)
+        #print(interacoes)
         #impoe um limite de interações
         if (interacoes == 1000) :
             print("não encontrou")
@@ -138,7 +144,8 @@ A = array([[10., 3.,-2.],
 B = array([[57.],
            [20.],
            [-4.]])
-'''
+
+
 A = array([ [ 2., 1., 7., 4.,-3.,-1., 4., 4., 7., 0.],
             [ 4., 2., 2., 3.,-2., 0., 3., 3., 4., 1.],
             [ 3., 4., 4., 2., 1.,-2., 2., 1., 9.,-3.],
@@ -161,7 +168,17 @@ B = array([ [ 86. ],
             [-43.5],
             [ 31.] ])
 
+A = array([ [ 2., 2., 1., 1.],
+            [ 1.,-1., 2.,-1.],
+            [ 3., 2.,-3.,-2.],
+            [ 4., 3., 2., 1.] ])
 
+B = array([ [ 7.],
+            [ 1.],
+            [ 4.],
+            [12.] ])
+
+'''
 print("A: ")
 print(A)
 """
@@ -171,5 +188,4 @@ for i in range(len(A)):
 print("B: ")
 print(B)
 
-print("x: ")
-print(gauss_jacobi(A,B))
+print(gauss_jacobi(A,B).transpose())

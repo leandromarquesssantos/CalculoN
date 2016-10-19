@@ -14,6 +14,8 @@ def gauss_seidel(A,B,k=0,x=None) :
     continua = True
     #variavel contador do numero de interações
     interacoes = 0
+    #variavel para ser a saida no arquivo
+    saida = []
     #enquanto o valor encontrado for maior que o erro tolerado, continua com a interação enquanto o resultado da funcao erro for true
     while (continua) :
         #interacoes recebe interacoes + 1
@@ -38,6 +40,14 @@ def gauss_seidel(A,B,k=0,x=None) :
             return x
         #salva o valor calculado X na variavel x
         x = X;
+        saida.append(str(interacoes)+';')    
+        for aux in range(len(X)) :
+            saida.append('{}'.format(X[aux]))
+            saida.append(';')
+        saida.append('\n')
+        arq = open("resultado.csv", 'w')        
+        arq.writelines(saida)
+        arq.close
     #retorna o vetor x como resultado
     return x
 
@@ -87,14 +97,66 @@ def erro(X,Xant,tolerado = 10**-10) :
     #se não retorna Verdadeiro
     return True
 
+'''
+A = array([ [ 4., -1., 0., -1., 0., 0., 0., 0., 0., 0. ],
+            [-1.,  4.,-1.,  0.,-1., 0., 0., 0., 0., 0. ],
+            [ 0., -1., 4.,  0., 0.,-1., 0., 0., 0., 0. ],
+            [-1.,  0., 0.,  4.,-1., 0., 0., 0., 0., 0. ],
+            [ 0., -1., 0., -1., 4.,-1.,-1., 0., 0., 0. ],
+            [ 0.,  0.,-1.,  0.,-1., 4., 0.,-1., 0., 0. ],
+            [ 0.,  0., 0.,  0.,-1., 0., 4.,-1., 0., 0. ],
+            [ 0.,  0., 0.,  0., 0.,-1.,-1., 4.,-1., 0. ],
+            [ 0.,  0., 0.,  0., 0., 0., 0.,-1., 4.,-1. ],
+            [ 0.,  0., 0.,  0., 0., 0., 0.,-1.,-1., 4. ] ])
 
-A = array([[10., 3.,-2.],
-           [ 2., 8.,-1.],
-           [ 1., 1., 5.]])
+B = array([ [-110.],
+            [ -30.],
+            [ -40.],
+            [-110.],
+            [   0.],
+            [ -15.],
+            [ -90.],
+            [ -25.],
+            [ -55.],
+            [ -65.] ])
+'''
+'''
+################# 4A
+A = array([ [10.,  1.,  1.],
+            [ 1., 10.,  1.],
+            [ 1.,  1., 10.] ])
 
-B = array([[57.],
-           [20.],
-           [-4.]])
+B = array([ [12.],
+            [12.],
+            [12.] ])
+'''
+'''
+################# 4B
+A = array([ [ 4.,-1., 0., 0.],
+            [-1., 4.,-1., 0.],
+            [ 0.,-1., 4.,-1.],
+            [ 0., 0.,-1., 4.] ])
+
+B = array([ [ 1.],
+            [ 1.],
+            [ 1.],
+            [ 1.] ])
+'''
+
+################# 4C
+
+A = array([ [ 1., 1.,-1., 2.,-1.],
+            [ 2., 0., 0., 0., 0.],
+            [ 0., 2., 0., 0., 0.],
+            [ 4., 0., 0.,16., 0.],
+            [ 0., 0., 4., 0., 0.] ])
+
+B = array([ [ 2.],
+            [ 2.],
+            [ 2.],
+            [20.],
+            [ 4.] ])
+
 
 print("Linhas: ",len(A))
 
